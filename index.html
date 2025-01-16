@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management</title>
+    <img src="./image/logoTruongDHKienTruc.png" id="logo">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #header {
+            background-color: #add8e6;
+            color: #000;
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            text-align: center;
+            padding: 5px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+        #list-student img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+        table:nth-of-type(1) {
+            background-color: #e0f7fa;
+            color: #000;
+        }
+        table:nth-of-type(1) th {
+            background-color: #00acc1;
+            color: #fff;
+        }
+        table:nth-of-type(2) {
+            background-color: #ffebee;
+            color: #000;
+        }
+        table:nth-of-type(2) th {
+            background-color: #d32f2f;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<h1 id="header">
+    ĐĂNG KÝ DANH SÁCH THI ĐẤU <br>
+<img src="image/BONG%20CUOI.jpg" width="200px">
+</h1>
+
+
+<p>* Các bạn sinh viên ghi rõ và điền đầy đủ các thông tin</p>
+<p>* Hạn nộp cuối cùng là 23/1/2025 </p>
+
+<table style="width: 700px; float: right;">
+    <tr>
+        <th style="font-size: 40px" colspan="7">Danh sách cầu thủ</th>
+    </tr>
+    <tr>
+        <th>Số áo  </th>
+        <th>Họ tên</th>
+        <th>Ngày sinh</th>
+        <th>Giới tính</th>
+        <th>Lớp</th>
+        <th>Ảnh</th>
+        <th>Tùy chọn</th>
+    </tr>
+    <tbody id="list-student"></tbody>
+</table>
+
+<table border="1" style="width: 500px;">
+    <tr>
+        <th colspan="2">Thông tin cầu thủ thi đấu </th>
+    </tr>
+    <tr>
+        <th>Số áo</th>
+        <td><input type="number" id="id"></td>
+    </tr>
+    <tr>
+        <th>Họ tên</th>
+        <td><input type="text" id="fullname"></td>
+    </tr>
+    <tr>
+        <th>Ngày sinh</th>
+        <td><input type="text" id="date"></td>
+    </tr>
+    <tr>
+        <th>Giới tính</th>
+        <td><input type="text" id="gender"></td>
+    </tr>
+    <tr>
+        <th>Lớp</th>
+        <td><input type="text" id="grade"></td>
+    </tr>
+    <tr>
+        <th>Ảnh</th>
+        <td><input type="text" id="img"></td>
+    </tr>
+    <tr>
+        <th></th>
+        <td>
+            <button style="background-color: limegreen;" id="add" onclick="addStudent()">Add</button>
+            <button style="background-color: gold;" id="edit" onclick="updateStudent()">Save</button>
+        </td>
+    </tr>
+</table>
+
+<script>
+    const listStudent = document.getElementById("list-student");
+    const idInput = document.getElementById("id");
+    const fullnameInput = document.getElementById("fullname");
+    const dateInput = document.getElementById("date");
+    const genderInput = document.getElementById("gender");
+    const gradeInput = document.getElementById("grade");
+    const imgInput = document.getElementById("img");
+
+    function addStudent() {
+        const id = idInput.value.trim();
+        const fullname = fullnameInput.value.trim();
+        const date = dateInput.value.trim();
+        const gender = genderInput.value.trim();
+        const grade = gradeInput.value.trim();
+        const img = imgInput.value.trim();
+
+        if (!id || !fullname || !date || !gender || !grade || !img) {
+            alert("Vui lòng điền đầy đủ thông tin!");
+            return;
+        }
+
+        const newRow = `
+                <tr>
+                    <td>${id}</td>
+                    <td>${fullname}</td>
+                    <td>${date}</td>
+                    <td>${gender}</td>
+                    <td>${grade}</td>
+                    <td><img src="${img}" alt="Ảnh học viên"></td>
+                    <td>
+                        <button onclick="editStudent(this)">Edit</button>
+                        <button onclick="deleteStudent(this)">Delete</button>
+                    </td>
+                </tr>
+            `;
+        listStudent.insertAdjacentHTML("beforeend", newRow);
+        clearForm();
+    }
+
+    function clearForm() {
+        idInput.value = "";
+        fullnameInput.value = "";
+        dateInput.value = "";
+        genderInput.value = "";
+        gradeInput.value = "";
+        imgInput.value = "";
+    }
+
+    function deleteStudent(button) {
+        const row = button.parentElement.parentElement;
+        row.remove();
+    }
+
+    function editStudent(button) {
+        const row = button.parentElement.parentElement;
+        idInput.value = row.cells[0].textContent;
+        fullnameInput.value = row.cells[1].textContent;
+        dateInput.value = row.cells[2].textContent;
+        genderInput.value = row.cells[3].textContent;
+        gradeInput.value = row.cells[4].textContent;
+        imgInput.value = row.cells[5].querySelector("img").src;
+        row.remove();
+    }
+</script>
+</body>
+</html>
