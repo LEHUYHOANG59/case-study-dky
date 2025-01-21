@@ -1,80 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Management</title>
-    <img src="./image/logoTruongDHKienTruc.png" id="logo">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Roboto", Arial, sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
         }
+
         #header {
-            background-color: #add8e6;
-            color: #000;
+            background-color: #0077c2;
+            color: #fff;
             text-align: center;
-            padding: 10px;
-            border-radius: 5px;
+            padding: 20px;
+            border-radius: 10px;
             margin-bottom: 20px;
         }
+
+        #header img {
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
         table {
             border-collapse: collapse;
-            margin-bottom: 20px;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
         }
+
         th, td {
-            border: 1px solid black;
+            border: none;
             text-align: center;
-            padding: 5px;
+            padding: 15px;
         }
+
         th {
-            background-color: #f2f2f2;
+            background-color: #0077c2;
+            color: #fff;
+            font-size: 18px;
         }
+
+        td {
+            background-color: #fff;
+            font-size: 16px;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tbody tr:hover {
+            background-color: #f1faff;
+        }
+
         button {
-            padding: 5px 10px;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
         }
+
         button:hover {
-            opacity: 0.8;
+            opacity: 0.9;
         }
-        #list-student img {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
+
+        button#add {
+            background-color: #4caf50;
+            color: white;
         }
-        table:nth-of-type(1) {
-            background-color: #e0f7fa;
-            color: #000;
+
+        button#edit {
+            background-color: #ff9800;
+            color: white;
         }
-        table:nth-of-type(1) th {
-            background-color: #00acc1;
-            color: #fff;
+
+        button.edit {
+            background-color: #2196f3;
+            color: white;
         }
-        table:nth-of-type(2) {
-            background-color: #ffebee;
-            color: #000;
+
+        button.delete {
+            background-color: #f44336;
+            color: white;
         }
-        table:nth-of-type(2) th {
-            background-color: #d32f2f;
-            color: #fff;
+
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        #form-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 20px;
+            background: #ffffff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        p {
+            text-align: center;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 5px;
         }
     </style>
 </head>
-<body>
-<h1 id="header">
-    ĐĂNG KÝ DANH SÁCH THI ĐẤU <br>
-<img src="image/BONG%20CUOI.jpg" width="200px">
-</h1>
 
+<body>
+<div id="header">
+    <h1>ĐĂNG KÝ DANH SÁCH THI ĐẤU</h1>
+    <img src="image/BONG%20CUOI.jpg" width="200px">
+</div>
 
 <p>* Các bạn sinh viên ghi rõ và điền đầy đủ các thông tin</p>
 <p>* Hạn nộp cuối cùng là 23/1/2025 </p>
 
-<table style="width: 700px; float: right;">
+<div id="form-container">
+    <table>
+        <tr>
+            <th colspan="2">Thông tin cầu thủ thi đấu</th>
+        </tr>
+        <tr>
+            <th>Số áo</th>
+            <td><input type="number" id="id"></td>
+        </tr>
+        <tr>
+            <th>Họ tên</th>
+            <td><input type="text" id="fullname"></td>
+        </tr>
+        <tr>
+            <th>Ngày sinh</th>
+            <td><input type="text" id="date"></td>
+        </tr>
+        <tr>
+            <th>Giới tính</th>
+            <td><input type="text" id="gender"></td>
+        </tr>
+        <tr>
+            <th>Lớp</th>
+            <td><input type="text" id="grade"></td>
+        </tr>
+        <tr>
+            <th>Ảnh</th>
+            <td><input type="text" id="img"></td>
+        </tr>
+        <tr>
+            <th></th>
+            <td>
+                <button id="add" onclick="addStudent()">Add</button>
+                <button id="edit" onclick="updateStudent()">Save</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<table>
     <tr>
-        <th style="font-size: 40px" colspan="7">Danh sách cầu thủ</th>
+        <th style="font-size: 24px" colspan="7">Danh sách cầu thủ</th>
     </tr>
     <tr>
-        <th>Số áo  </th>
+        <th>Số áo</th>
         <th>Họ tên</th>
         <th>Ngày sinh</th>
         <th>Giới tính</th>
@@ -83,43 +190,6 @@
         <th>Tùy chọn</th>
     </tr>
     <tbody id="list-student"></tbody>
-</table>
-
-<table border="1" style="width: 500px;">
-    <tr>
-        <th colspan="2">Thông tin cầu thủ thi đấu </th>
-    </tr>
-    <tr>
-        <th>Số áo</th>
-        <td><input type="number" id="id"></td>
-    </tr>
-    <tr>
-        <th>Họ tên</th>
-        <td><input type="text" id="fullname"></td>
-    </tr>
-    <tr>
-        <th>Ngày sinh</th>
-        <td><input type="text" id="date"></td>
-    </tr>
-    <tr>
-        <th>Giới tính</th>
-        <td><input type="text" id="gender"></td>
-    </tr>
-    <tr>
-        <th>Lớp</th>
-        <td><input type="text" id="grade"></td>
-    </tr>
-    <tr>
-        <th>Ảnh</th>
-        <td><input type="text" id="img"></td>
-    </tr>
-    <tr>
-        <th></th>
-        <td>
-            <button style="background-color: limegreen;" id="add" onclick="addStudent()">Add</button>
-            <button style="background-color: gold;" id="edit" onclick="updateStudent()">Save</button>
-        </td>
-    </tr>
 </table>
 
 <script>
@@ -153,8 +223,8 @@
                     <td>${grade}</td>
                     <td><img src="${img}" alt="Ảnh học viên"></td>
                     <td>
-                        <button onclick="editStudent(this)">Edit</button>
-                        <button onclick="deleteStudent(this)">Delete</button>
+                        <button class="edit" onclick="editStudent(this)">Edit</button>
+                        <button class="delete" onclick="deleteStudent(this)">Delete</button>
                     </td>
                 </tr>
             `;
@@ -188,4 +258,5 @@
     }
 </script>
 </body>
+
 </html>
